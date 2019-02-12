@@ -30,3 +30,13 @@
     transform: rotate(360deg);
   }
 }
+
+.text-danger {
+  color: red;
+}
+
+.games-toggle {
+  color: green;
+  display: block;
+  cursor: pointer;
+}
