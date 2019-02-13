@@ -93,6 +93,10 @@ h2 {
   background-color: #3498db;
 }
 
+.submit-button:disabled {
+  cursor: not-allowed;
+}
+
 .form-control,
 .form-control:focus {
   border-color: #2eb9ce;
