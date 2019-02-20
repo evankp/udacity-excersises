@@ -1,10 +1,10 @@
-let createStore = function(reducer) {
+function createStore(reducer) {
     let state = [],
         eventListeners = [];
 
-    this.getState = () => state;
+    const getState = () => state;
 
-    this.listenFor = event => {
+    const listenFor = event => {
         eventListeners.push(event);
 
         return () => {
@@ -12,16 +12,22 @@ let createStore = function(reducer) {
         }
     };
 
-    this.dispatch = action => {
+    const dispatch = action => {
         state = reducer(state, action) ;
         eventListeners.forEach(listener => listener(state))
+    };
+
+    return {
+      getState,
+      listenFor,
+      dispatch
     }
 };
 
-let store =  new createStore(todoList);
+let store =  createStore(todoList);
 
 store.listenFor(() => {
-    console.log('State Changed!')
+    console.log('State Changed! It is: ', store.getState())
 });
 
 function todoList(state = [], action) {
