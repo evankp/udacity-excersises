@@ -15,3 +15,9 @@ This repository is not open for collaborating.
     - [Contacts backend](https://github.com/evankp/udacity-excersises/tree/contacts-server)
 - [Store function without redux](https://github.com/evankp/udacity-excersises/tree/store-without-redux)
 - [React + Redux (with Redux Thunk)](https://github.com/evankp/udacity-excersises/tree/React-redux-excersise)
+
+## Libraries
+- React
+- Redux
+- start-react-app
+- prop-types
