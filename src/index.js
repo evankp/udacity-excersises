@@ -4,7 +4,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import * as Redux from 'redux';
-import {todo, goal} from './redux-files/reducers';
+import ReduxThunk from 'redux-thunk';
+import {todo, goal, loading} from './redux-files/reducers';
 
 const logger = store => next => action => {
     console.group(action.type);
@@ -16,7 +17,7 @@ const logger = store => next => action => {
     return result
 };
 
-const store = Redux.createStore(Redux.combineReducers({todo, goal}), Redux.applyMiddleware(logger));
+const store = Redux.createStore(Redux.combineReducers({todo, goal, loading}), Redux.applyMiddleware(ReduxThunk, logger));
 
 ReactDOM.render(<App store={store}/>, document.getElementById('root'));
 

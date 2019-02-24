@@ -2,10 +2,6 @@ import React from 'react'
 import Proptypes from 'prop-types';
 import * as actionCreators from '../redux-files/action-creators';
 
-function generateId() {
-    return Math.random().toString(36).substring(2) + (new Date()).getTime().toString(36);
-}
-
 export default class Section extends React.Component {
     static propTypes = {
         type: Proptypes.string.isRequired,
@@ -15,13 +11,7 @@ export default class Section extends React.Component {
         const {store, type} = this.props;
         e.preventDefault();
 
-        if (type === 'todo') {
-            store.dispatch(actionCreators.addTodo({name: this.input.value, id: generateId(), complete: false}));
-        } else {
-            store.dispatch(actionCreators.addGoal({name: this.input.value, id: generateId(), complete: false}));
-        }
-
-        this.input.value = ''
+        store.dispatch(actionCreators.handleAddItem(this.input.value, type, () => this.input.value = ''))
     };
 
     handleToggle = id => {
@@ -30,12 +20,8 @@ export default class Section extends React.Component {
         }
     };
 
-    handleDelete = id => {
-        if (this.props.type === 'todo') {
-            this.props.store.dispatch(actionCreators.removeTodo(id))
-        } else {
-            this.props.store.dispatch(actionCreators.removeGoal(id))
-        }
+    handleDelete = item => {
+        this.props.store.dispatch(actionCreators.handleDeleteItem(item, this.props.type))
     };
 
     render() {
@@ -54,7 +40,7 @@ export default class Section extends React.Component {
                                   style={{textDecoration: item.complete ? 'line-through' : 'none'}}>
                                 {item.name}
                             </span>
-                            <button onClick={() => this.handleDelete(item.id)}>X</button>
+                            <button onClick={() => this.handleDelete(item)}>X</button>
                         </li>
                     ))}
                 </ul>
