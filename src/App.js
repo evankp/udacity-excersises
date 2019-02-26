@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
+import * as ReactRedux from 'react-redux';
 import './App.css';
 import {getInitalValues} from "./redux-files/action-creators";
-import connect from './components/connect-component'
 import Section from "./components/section";
 
 
-const ConnectedTodo = connect((store) => ({
+const ConnectedTodo = ReactRedux.connect((store) => ({
     type: 'todo',
     items: store.todo
 }))(Section);
 
-const ConnectedGoals = connect((store) => ({
+const ConnectedGoals = ReactRedux.connect((store) => ({
     type: 'goal',
     items: store.goal
 }))(Section);

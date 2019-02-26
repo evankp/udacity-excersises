@@ -3,11 +3,10 @@ import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import * as Redux from 'redux';
 import ReduxThunk from 'redux-thunk';
+import * as ReactRedux from 'react-redux';
 
 import './index.css';
 import {todo, goal, loading} from './redux-files/reducers';
-import Provider from "./context";
-import connect from './components/connect-component'
 import App from "./App";
 
 const logger = store => next => action => {
@@ -26,14 +25,14 @@ export const store = Redux.createStore(Redux.combineReducers({
     loading
 }), Redux.applyMiddleware(ReduxThunk, logger));
 
-const ConnectedApp = connect(store => ({
+const ConnectedApp = ReactRedux.connect(store => ({
     loading: store.loading
 }))(App);
 
 ReactDOM.render(
-    <Provider store={store}>
+    <ReactRedux.Provider store={store}>
         <ConnectedApp/>
-    </Provider>, document.getElementById('root'));
+    </ReactRedux.Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
