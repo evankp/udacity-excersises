@@ -8,24 +8,24 @@ export default class Section extends React.Component {
     };
 
     handleSubmit = e => {
-        const {store, type} = this.props;
+        const {dispatch, type} = this.props;
         e.preventDefault();
 
-        store.dispatch(actionCreators.handleAddItem(this.input.value, type, () => this.input.value = ''))
+        dispatch(actionCreators.handleAddItem(this.input.value, type, () => this.input.value = ''))
     };
 
     handleToggle = id => {
         if (this.props.type === 'todo') {
-            this.props.store.dispatch(actionCreators.toggleTodo(id))
+            this.props.dispatch(actionCreators.toggleTodo(id))
         }
     };
 
     handleDelete = item => {
-        this.props.store.dispatch(actionCreators.handleDeleteItem(item, this.props.type))
+        this.props.dispatch(actionCreators.handleDeleteItem(item, this.props.type))
     };
 
     render() {
-        const {type, store} = this.props;
+        const {type, items} = this.props;
         return (
             <div className="list-sections">
                 <h1>{type.substr(0, 1).toUpperCase() + type.substr(1)}s</h1>
@@ -34,7 +34,7 @@ export default class Section extends React.Component {
                     <button>Add</button>
                 </form>
                 <ul>
-                    {store.getState()[type].map(item => (
+                    {items.map(item => (
                         <li key={item.id}>
                             <span onClick={() => this.handleToggle(item.id)}
                                   style={{textDecoration: item.complete ? 'line-through' : 'none'}}>

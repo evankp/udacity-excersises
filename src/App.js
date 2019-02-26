@@ -1,28 +1,34 @@
 import React, {Component} from 'react';
 import './App.css';
-import Section from "./components/section";
 import {getInitalValues} from "./redux-files/action-creators";
+import connect from './components/connect-component'
+import Section from "./components/section";
+
+
+const ConnectedTodo = connect((store) => ({
+    type: 'todo',
+    items: store.todo
+}))(Section);
+
+const ConnectedGoals = connect((store) => ({
+    type: 'goal',
+    items: store.goal
+}))(Section);
 
 export default class App extends Component {
     componentDidMount() {
-        let {store} = this.props;
-
-        store.subscribe(() => this.forceUpdate());
-
-        store.dispatch(getInitalValues())
+        this.props.dispatch(getInitalValues())
     }
 
     render() {
-        const {loading} = this.props.store.getState();
-
-        if (loading) {
+        if (this.props.loading) {
             return <h3 className="list-sections">Loading...</h3>
         }
 
         return (
             <div className="App">
-                <Section type="todo" store={this.props.store}/>
-                <Section type="goal" store={this.props.store}/>
+                <ConnectedTodo/>
+                <ConnectedGoals/>
             </div>
         );
     }
